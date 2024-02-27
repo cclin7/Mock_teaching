@@ -467,7 +467,7 @@ Jim Lin
 </ul></section></section><section><section id="k-means-algorithm" class="title-slide slide level1 center"><h1>K-means algorithm</h1>
 
 </section><section id="idea" class="slide level2"><h2>Idea</h2>
-<p><strong>Idea</strong>: Recall the assign table problem: we want to group guests in each table to have the largest in common.</p>
+<p>Recall the table assignment problem: our goal is to seat guests at each table in a manner that maximizes their similarity..</p>
 <!-- 
 partition observations into **k** clusters of data with largest similarity within the group memebrs $$\Rightarrow$$ it also implies (can be shown mathematically) the largest dissimilarity for different group members!
 -->
@@ -484,7 +484,7 @@ partition observations into **k** clusters of data with largest similarity withi
 </div>
 </div>
 </section><section id="idea-1" class="slide level2"><h2>Idea</h2>
-<p><strong>Idea</strong>: Recall the assign table problem: we want to group guests in each table to have the largest in common.</p>
+<p>Maximizes their similarity <span class="math inline">\(\Rightarrow\)</span> the shortest distance among points in the same cluster.</p>
 <div>
 <div class="cell">
 <div class="cell-output-display">
@@ -496,21 +496,18 @@ partition observations into **k** clusters of data with largest similarity withi
 </div>
 </div>
 </section><section id="formal-problem-setting" class="slide level2"><h2>Formal Problem Setting:</h2>
-<p>Find the sets <span class="math inline">\(\{C_{1},C_{2},\cdots C_{K}\}\)</span> such that the within-cluster variation <span class="math display">\[W\left(C_{k}\right)=\frac{1}{|C_{k}|}\sum_{i,i'\in C_{k}} \sum_{j=1}^p \left(\mathbf{x}_{i,j}-\mathbf{x}_{i',j}\right)^2  \]</span> is minimized. Here <span class="math inline">\(\left(\mathbf{x}_{i,}-\mathbf{x}_{j}\right)^2\)</span> is squared Euclidean distance. <span class="math display">\[\tag{12.17} \min_{C_{1},C_{2},\cdots C_{K}}\sum_{k=1}^{K}W\left(C_{k}\right)\]</span></p>
+<p>Find the sets <span class="math inline">\(\{C_{1},C_{2},\cdots C_{K}\}\)</span> such that the within-cluster variation <span class="math display">\[W\left(C_{k}\right)=\frac{1}{|C_{k}|}\sum_{i,i'\in C_{k}} \sum_{j=1}^p \left(\mathbf{x}_{i,j}-\mathbf{x}_{i',j}\right)^2  \]</span> is minimized. Here <span class="math inline">\(\left(\mathbf{x}_{i,j}-\mathbf{x}_{i',j}\right)^2\)</span> is squared Euclidean distance. <span class="math display">\[\tag{12.17} \min_{C_{1},C_{2},\cdots C_{K}}\sum_{k=1}^{K}W\left(C_{k}\right)\]</span></p>
 </section><section id="algorithms" class="slide level2"><h2>Algorithms</h2>
+<ul>
+<li class="fragment"><p><strong>Initialization</strong>: Randomly select <span class="math inline">\(k\)</span> initial points to act as the initial centroids.</p></li>
+<li class="fragment">
+<p><strong>Iteration</strong>: Repeat the following steps until the cluster assignments no longer change:</p>
 <ol type="1">
-<li class="fragment">
-<strong>Initialization</strong>: Randomly select <span class="math inline">\(k\)</span> initial points to act as the initial centroids.</li>
-<li class="fragment">
-<strong>Iteration</strong>: Repeat the following steps until the cluster assignments no longer change:
-<ol type="1">
-<li class="fragment">
-<strong>Reassign cluster</strong>: For each observation, find the closest centroid and reassign the observation to the corresponding cluster.</li>
-<li class="fragment">
-<strong>Update centroid</strong>: Recalculate the centroid of each cluster by taking the average position of all observations currently in that cluster.</li>
+<li class="fragment"><p><strong>Reassign cluster</strong>: For each observation, find the closest centroid and reassign the observation to the corresponding cluster.</p></li>
+<li class="fragment"><p><strong>Update centroid</strong>: Recalculate the centroid of each cluster by taking the average position of all observations currently in that cluster.</p></li>
 </ol>
 </li>
-</ol></section><section id="an-example---convergence-process" class="slide level2"><h2>An example - convergence process</h2>
+</ul></section><section id="an-example---convergence-process" class="slide level2"><h2>An example - convergence process</h2>
 
 <img data-src="figures_for_slides/kmeans-search.png" class="quarto-figure quarto-figure-center r-stretch"></section><section id="intuition" class="slide level2"><h2>Intuition</h2>
 <p><span class="math display">\[\tag{12.18} W\left(C_{k}\right)=\frac{1}{|C_{k}|}\sum_{i,i'\in C_{k}}\sum_{j=1}^{p}\left(\mathbf{x}_{i,j}-\mathbf{x}_{i',j}\right)^{2}\\=2\sum_{i,i'\in C_{k}}\sum_{j=1}^{p}\left(\mathbf{x}_{i,j}-\bar{\mathbf{x}}_{k,j}\right)^{2} \]</span></p>
@@ -519,45 +516,43 @@ partition observations into **k** clusters of data with largest similarity withi
 <span class="math inline">\(\bar{\mathbf{x}}_{k,j}\)</span> is the mean of feature <span class="math inline">\(j\)</span> for points in cluster <span class="math inline">\(C_k\)</span>.</li>
 <li class="fragment">That is, <span class="math inline">\(\bar{x}_{k,j}\)</span> is the <span class="math inline">\(j^{th}\)</span> element of the centroid of cluster <span class="math inline">\(C_k\)</span>, which can be represented as <span class="math inline">\((\bar{x}_{k,1}, \bar{x}_{k,2}, \cdots, \bar{x}_{k,j}, \cdots, \bar{x}_{k,P})\)</span>.</li>
 </ul></section><section id="intuition-1" class="slide level2"><h2>Intuition</h2>
+<p><span class="math display">\[\tag{12.18} W\left(C_{k}\right)=\frac{1}{|C_{k}|}\sum_{i,i'\in C_{k}}\sum_{j=1}^{p}\left(\mathbf{x}_{i,j}-\mathbf{x}_{i',j}\right)^{2}\\=2\sum_{i,i'\in C_{k}}\sum_{j=1}^{p}\left(\mathbf{x}_{i,j}-\bar{\mathbf{x}}_{k,j}\right)^{2} \]</span></p>
 
-<img data-src="ML_teaching_files/figure-revealjs/unnamed-chunk-3-1.png" width="960" class="r-stretch"></section><section id="intuition-2" class="slide level2"><h2>Intuition</h2>
+<img data-src="ML_teaching_files/figure-revealjs/unnamed-chunk-3-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:70.0%"></section><section id="intuition-2" class="slide level2"><h2>Intuition</h2>
 <ul>
-<li class="fragment"><p>The step “<strong>Update centroid</strong>:” is relying on “centroid” (cluster means) to minimize the deviations within each group. ( <span class="math inline">\(\frac{d^2W\left(C_{k}\right)}{d\bar{\mathbf{x}}^2_{k,j}}&lt;0\)</span> )</p></li>
-<li class="fragment"><p>and the step “<strong>reassign cluster</strong>” is to reallocating <span class="math inline">\(\mathbf{x}_{i,j}\)</span> to improve (reduce) <span class="math inline">\(W\left(C_{k}\right)\)</span></p></li>
+<li class="fragment"><p>Objective: minimize <span class="math inline">\(2\sum_{i,i'\in C_{k}}\sum_{j=1}^{p}\left(\mathbf{x}_{i,j}-\bar{\mathbf{x}}_{k,j}\right)^{2}\)</span></p></li>
+<li class="fragment"><p>The step “<strong>Reassign cluster</strong>” is to reallocate <span class="math inline">\(\mathbf{x}_{i,j}\)</span> to improve (reduce) <span class="math inline">\(W\left(C_{k}\right)\)</span></p></li>
+<li class="fragment"><p>The step “<strong>Update centroid</strong>:” is to reallocate “centroid” (cluster means) to minimize the deviations within each group. ( <span class="math inline">\(\frac{d^2W\left(C_{k}\right)}{d\bar{\mathbf{x}}^2_{k,j}}&lt;0\)</span> )</p></li>
 </ul></section></section><section><section id="discussions" class="title-slide slide level1 center"><h1>Discussions</h1>
 
-</section><section id="how-do-we-know-we-find-the-best-clusters" class="slide level2"><h2>How do we know we find the “best” clusters?</h2>
+</section><section id="which-is-the-best-clustering" class="slide level2"><h2>Which is the ‘best’ clustering?</h2>
+<p>Using “total within-cluster sum of squares” as the measurement.</p>
 
 <img data-src="figures_for_slides/k-means-performance.png" class="quarto-figure quarto-figure-center r-stretch"></section><section id="other-issues" class="slide level2"><h2>Other issues</h2>
 <ul>
 <li class="fragment">How to pick the K? Elbow approach</li>
-<li class="fragment">Sensitive to the data scale</li>
-<li class="fragment">Sensitive to the outlier</li>
-</ul></section><section id="section" class="slide level2"><h2></h2>
-</section></section><section><section id="implement-in-r-an-simulation-based-example" class="title-slide slide level1 center"><h1>Implement in R: An simulation based example</h1>
+<li class="fragment">Sensitive to outliers - consider the soft K-means clustering (Fuzzy clustering <span class="citation" data-cites="bezdek2013pattern">(<a href="#/references" role="doc-biblioref" onclick="">Bezdek 2013</a>)</span>)</li>
+<li class="fragment">Caution when interpreting clustering results (there’s no straightforward method to validate the outcomes)</li>
+</ul></section></section><section><section id="implement-in-r-an-simulation-based-example" class="title-slide slide level1 center"><h1>Implement in R: An simulation based example</h1>
 
 </section><section id="step-1-simulate-data" class="slide level2"><h2>STEP 1: simulate data</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1" data-code-line-numbers="1|6-7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="co"># Set the number of points</span></span>
+<div class="sourceCode cell-code" id="cb1" data-code-line-numbers="1-4|6-12|14-16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="co"># Simulate 3 groups of 100 points for given means and standard deviations.</span></span>
 <span id="cb1-2"><a href=""></a>ssize <span class="ot">&lt;-</span> <span class="dv">100</span></span>
-<span id="cb1-3"><a href=""></a><span class="co"># Example means/stds for 3 groups</span></span>
-<span id="cb1-4"><a href=""></a>means <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>)</span>
-<span id="cb1-5"><a href=""></a>stds <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">1</span>) </span>
-<span id="cb1-6"><a href=""></a><span class="co"># Initialize an empty data frame </span></span>
+<span id="cb1-3"><a href=""></a>means <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">4</span>)</span>
+<span id="cb1-4"><a href=""></a>m     <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="dv">1</span>, <span class="dv">9</span>, <span class="dv">5</span>)</span>
+<span id="cb1-5"><a href=""></a></span>
+<span id="cb1-6"><a href=""></a><span class="co"># Generate and append group points to a dataframe in a loop.</span></span>
 <span id="cb1-7"><a href=""></a>pts <span class="ot">&lt;-</span> <span class="fu">data.frame</span>()</span>
-<span id="cb1-8"><a href=""></a><span class="co"># Loop through each group </span></span>
-<span id="cb1-9"><a href=""></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(means)) {</span>
-<span id="cb1-10"><a href=""></a>  group_pts <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(ssize <span class="sc">*</span> <span class="dv">2</span>,</span>
-<span id="cb1-11"><a href=""></a>    <span class="at">mean =</span> means[i], <span class="at">sd =</span> stds[i]), <span class="at">ncol =</span> <span class="dv">2</span>)</span>
-<span id="cb1-12"><a href=""></a>  group_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(group_pts) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">Ptype =</span> i)</span>
-<span id="cb1-13"><a href=""></a>  pts <span class="ot">&lt;-</span> <span class="fu">rbind</span>(pts, group_df)</span>
-<span id="cb1-14"><a href=""></a>}</span>
-<span id="cb1-15"><a href=""></a></span>
-<span id="cb1-16"><a href=""></a><span class="co"># Plotting with ggplot2, using Ptype as the color factor</span></span>
-<span id="cb1-17"><a href=""></a><span class="fu">ggplot</span>(pts, <span class="fu">aes</span>(<span class="at">x=</span>V1, <span class="at">y=</span>V2, <span class="at">color=</span><span class="fu">factor</span>(Ptype))) <span class="sc">+</span></span>
-<span id="cb1-18"><a href=""></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb1-19"><a href=""></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Points from Multiple Groups"</span>, <span class="at">x =</span> <span class="st">"X-axis"</span>, <span class="at">y =</span> <span class="st">"Y-axis"</span>, <span class="at">color =</span> <span class="st">"Point Type"</span>) <span class="sc">+</span></span>
-<span id="cb1-20"><a href=""></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-8"><a href=""></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(means)) {</span>
+<span id="cb1-9"><a href=""></a>  x_vals <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(ssize, <span class="at">mean=</span>means[i], <span class="at">sd=</span><span class="dv">1</span>)</span>
+<span id="cb1-10"><a href=""></a>  y_vals <span class="ot">&lt;-</span> m[i]<span class="sc">*</span> x_vals <span class="sc">+</span> <span class="fu">rnorm</span>(ssize, <span class="at">mean=</span><span class="dv">0</span>, <span class="at">sd=</span><span class="dv">4</span>) <span class="co"># y = mx + N(0,1)</span></span>
+<span id="cb1-11"><a href=""></a>  group_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">V1=</span>x_vals, <span class="at">V2=</span>y_vals, <span class="at">Ptype=</span>i)</span>
+<span id="cb1-12"><a href=""></a>  pts <span class="ot">&lt;-</span> <span class="fu">rbind</span>(pts, group_df)}</span>
+<span id="cb1-13"><a href=""></a></span>
+<span id="cb1-14"><a href=""></a><span class="co"># Plotting with ggplot2, using Ptype as the color factor.</span></span>
+<span id="cb1-15"><a href=""></a><span class="fu">ggplot</span>(pts, <span class="fu">aes</span>(<span class="at">x=</span>V1, <span class="at">y=</span>V2, <span class="at">color=</span><span class="fu">factor</span>(Ptype))) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb1-16"><a href=""></a>  <span class="fu">labs</span>(<span class="at">color =</span> <span class="st">"Point Type"</span>) <span class="sc">+</span> <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 </section><section id="step-1-simulate-data-output" class="slide level2 output-location-slide"><h2>STEP 1: simulate data</h2><div class="cell output-location-slide">
@@ -573,43 +568,30 @@ Figure&nbsp;1: data distribution
 </div>
 </div></section><section id="step-2-run-kmeans-clustering" class="slide level2"><h2>STEP 2: run kmeans clustering</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2" data-code-line-numbers="1|6-7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a><span class="co"># #| code-fold: true</span></span>
-<span id="cb2-2"><a href=""></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb2-3"><a href=""></a><span class="fu">library</span>(gridExtra)</span>
-<span id="cb2-4"><a href=""></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb2-5"><a href=""></a>K<span class="ot">=</span><span class="dv">3</span></span>
-<span id="cb2-6"><a href=""></a>plots <span class="ot">&lt;-</span> <span class="fu">list</span>() <span class="co"># Initialize an empty list to store the plots</span></span>
-<span id="cb2-7"><a href=""></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>) {</span>
-<span id="cb2-8"><a href=""></a>  <span class="co"># Perform k-means clustering</span></span>
-<span id="cb2-9"><a href=""></a>  km.out <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(pts, <span class="at">centers =</span> K, <span class="at">nstart =</span> i) </span>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>) {</span>
+<span id="cb2-2"><a href=""></a>  <span class="co"># Perform k-means clustering</span></span>
+<span id="cb2-3"><a href=""></a>  km.out <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(pts, <span class="at">centers =</span> K, <span class="at">nstart =</span> i) </span>
+<span id="cb2-4"><a href=""></a>  </span>
+<span id="cb2-5"><a href=""></a>  <span class="co"># Prepare the data frame from the original points</span></span>
+<span id="cb2-6"><a href=""></a>  pts_df <span class="ot">&lt;-</span> pts <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">cluster =</span> <span class="fu">as.factor</span>(km.out<span class="sc">$</span>cluster))</span>
+<span id="cb2-7"><a href=""></a>  </span>
+<span id="cb2-8"><a href=""></a>  <span class="co"># Prepare the data frame for the cluster centers</span></span>
+<span id="cb2-9"><a href=""></a>  centers_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(km.out<span class="sc">$</span>centers) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">cluster =</span> <span class="dv">1</span><span class="sc">:</span>K)</span>
 <span id="cb2-10"><a href=""></a>  </span>
-<span id="cb2-11"><a href=""></a>  <span class="co"># Prepare the data frame from the original points</span></span>
-<span id="cb2-12"><a href=""></a>  pts_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(pts) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">cluster =</span> <span class="fu">as.factor</span>(km.out<span class="sc">$</span>cluster))</span>
+<span id="cb2-11"><a href=""></a>  <span class="co"># Generate the plot using the separate function</span></span>
+<span id="cb2-12"><a href=""></a>  p <span class="ot">&lt;-</span> <span class="fu">createClusterPlot</span>(pts_df, centers_df, i, km.out<span class="sc">$</span>withinss)</span>
 <span id="cb2-13"><a href=""></a>  </span>
-<span id="cb2-14"><a href=""></a>  <span class="co"># Prepare the data frame for the cluster centers</span></span>
-<span id="cb2-15"><a href=""></a>  centers_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(km.out<span class="sc">$</span>centers) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">cluster =</span> <span class="dv">1</span><span class="sc">:</span>K)</span>
-<span id="cb2-16"><a href=""></a>  </span>
-<span id="cb2-17"><a href=""></a>  <span class="co"># Generate the plot</span></span>
-<span id="cb2-18"><a href=""></a>  p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span> </span>
-<span id="cb2-19"><a href=""></a>    <span class="fu">geom_point</span>(<span class="at">data =</span> pts_df, <span class="fu">aes</span>(<span class="at">x =</span> V1, <span class="at">y =</span> V2, <span class="at">color =</span> cluster)) <span class="sc">+</span>  <span class="co"># Plot points colored by cluster</span></span>
-<span id="cb2-20"><a href=""></a>    <span class="fu">geom_point</span>(<span class="at">data =</span> centers_df, <span class="fu">aes</span>(<span class="at">x =</span> V1, <span class="at">y =</span> V2), <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="dv">3</span>, <span class="at">shape =</span> <span class="dv">17</span>) <span class="sc">+</span>  <span class="co"># Plot centers</span></span>
-<span id="cb2-21"><a href=""></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Iteration"</span>, i, <span class="st">"rounds; tot.withinss="</span>,  <span class="fu">round</span>(km.out<span class="sc">$</span>tot.withinss,<span class="dv">2</span>)  )) <span class="sc">+</span>  <span class="co"># Add iteration title</span></span>
-<span id="cb2-22"><a href=""></a>    <span class="fu">theme_minimal</span>()  <span class="co"># Use minimal theme for cleaner look</span></span>
-<span id="cb2-23"><a href=""></a>  </span>
-<span id="cb2-24"><a href=""></a>  <span class="co"># Optionally add text to denote withinss for each cluster. Adjust coordinates as needed.</span></span>
-<span id="cb2-25"><a href=""></a>  <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>) {</span>
-<span id="cb2-26"><a href=""></a>    p <span class="ot">&lt;-</span> p <span class="sc">+</span> <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> centers_df[j, <span class="dv">1</span>], <span class="at">y =</span> centers_df[j, <span class="dv">2</span>], <span class="at">label =</span>  <span class="fu">round</span>(km.out<span class="sc">$</span>withinss[j], <span class="dv">2</span>), <span class="at">hjust =</span> <span class="fl">1.5</span>, <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.5</span>)</span>
-<span id="cb2-27"><a href=""></a>  }</span>
-<span id="cb2-28"><a href=""></a>  </span>
-<span id="cb2-29"><a href=""></a>  plots[[i]] <span class="ot">&lt;-</span> p <span class="co"># Store the plot in the list</span></span>
-<span id="cb2-30"><a href=""></a>}</span>
-<span id="cb2-31"><a href=""></a><span class="fu">grid.arrange</span>(<span class="at">grobs =</span> plots, <span class="at">ncol =</span> <span class="dv">2</span>) <span class="co"># Arrange the plots in a 2 by 2 grid</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-14"><a href=""></a>  plots[[i]] <span class="ot">&lt;-</span> p <span class="co"># Store the plot in the list</span></span>
+<span id="cb2-15"><a href=""></a>}</span>
+<span id="cb2-16"><a href=""></a></span>
+<span id="cb2-17"><a href=""></a><span class="co"># Arrange the plots in a 2 by 2 grid</span></span>
+<span id="cb2-18"><a href=""></a><span class="fu">grid.arrange</span>(<span class="at">grobs =</span> plots, <span class="at">ncol =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 </section><section id="step-2-run-kmeans-clustering-output" class="slide level2 output-location-slide"><h2>STEP 2: run kmeans clustering</h2><div class="cell output-location-slide">
 <div class="cell-output-display">
 <div>
-<figure><p><img data-src="ML_teaching_files/figure-revealjs/unnamed-chunk-6-1.png" style="width:100.0%"></p>
+<figure><p><img data-src="ML_teaching_files/figure-revealjs/unnamed-chunk-6-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -620,6 +602,9 @@ Figure&nbsp;1: data distribution
 </div>
 </div>
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-bezdek2013pattern" class="csl-entry" role="listitem">
+Bezdek, James C. 2013. <em>Pattern Recognition with Fuzzy Objective Function Algorithms</em>. Springer Science &amp; Business Media.
+</div>
 <div id="ref-bishop2006pattern" class="csl-entry" role="listitem">
 Bishop, Christopher. 2006. <span>“Pattern Recognition and Machine Learning.”</span> <em>Springer Google Schola</em> 2: 5–43.
 </div>
